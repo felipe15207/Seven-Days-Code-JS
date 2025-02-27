@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Two</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(15, 15, 15);
+            color: #1900ff;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 7%;
+        }
+
+        form input {
+            width: 180px;
+            height: 23px;
+            background-color: transparent;
+            border: 2px solid #1900ff;
+            margin-bottom: 35px;
+            margin-top: 10px;
+            color: #FFF;
+        }
+
+        form label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        #btn-submit {
+            background-color: #1900ff;
+            border: none;
+            width: 180px;
+            height: 35px;
+            border-radius: 35px;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        #btn-submit:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .ola-h1 {
+            text-align: center;
+            color: red;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+<body>
+
+    <form>
+        <label for="name">What´s your name?</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="years">How old are you?</label>
+        <input type="number" id="years" name="years" required>
+
+        <label for="input-language">What programming language are you studying?</label>
+        <input type="text" id="input-language" name="input-language" required>
+
+        <input type="submit" id="btn-submit">
+    </form>
+    
+
+    <script>
+        const button = document.querySelector("form");
+        button.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const h1 = document.createElement("h1");
+            h1.classList.add("ola-h1")
+            h1.textContent = `Olá ${formData.get("name")}, você tem ${formData.get("years")} anos e já está aprendendo ${formData.get("input-language")}!`;
+            document.body.appendChild(h1);
+            setTimeout(3000);
+            const gosto = prompt(`Você gosta de estudar ${formData.get("input-language")}? Responda com o número 1 para SIM ou 2 para NÃO.`);
+            if(gosto == 1) {
+                alert("Muito bom! Continue estudando e você terá muito sucesso.");
+            } else {
+                alert("Ahh que pena... Já tentou aprender outras linguagens?");
+            }
+        })
+    </script>
+</body>
+</html>
