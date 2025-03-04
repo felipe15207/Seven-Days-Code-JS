@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body > h1 {
+            text-align: center;
+            border-bottom: red 3px solid;
+        }
+
+        .form-lista {
+            text-align: center;
+        }
+
+        #pergunta {
+            font-size: 1.2rem;
+        }
+
+        .container-btns select{
+            margin: 0 auto;
+            margin-bottom: 15px;
+            padding: 5px;
+        }
+
+        .container-btns input {
+            background-color: red;
+            border: none;
+            padding: 9px 25px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.5s ease-in;
+            cursor: pointer;
+        }
+
+        .container-btns input:hover {
+            background-color: #888;
+        }
+
+        #nome-produto {
+            background-color: #444;
+            color: #fff;
+        }
+
+        #nome-produto {
+            padding-left: 9px;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <h1>Lista de Compras</h1>
+    <div class="anotacao">
+        <div class="form-lista">
+            <p id="pergunta">Deseja adicionar uma comida á lista?</p>
+        <form class="container-btns">
+            <input type="button" id="btn-yes" value="Sim">
+            <input type="button" id="btn-no" value="Não">
+        </form>
+        </div>
+    </div>
+
+    <script>
+
+        const btnYes = document.getElementById("btn-yes");
+        let lista = {
+            carnes: [], limpeza: [], doces: [], frutas: []
+        };
+        /*Object.keys(lista).forEach(element => {
+            alert(element)
+        });*/
+
+        btnYes.addEventListener("click", () => {
+            const buttons = document.querySelector(".container-btns");
+            buttons.innerHTML = "";
+            const inputList = document.createElement("input");
+            inputList.id = "nome-produto";
+            inputList.type = "text";
+            inputList.required = true;
+            inputList.placeholder = "Nome do produto";
+            const btnSubmit = document.createElement("input");
+            btnSubmit.id = "submit-produto";
+            btnSubmit.type = "submit";
+            btnSubmit.value = "Adicionar";
+            const pergunta = document.getElementById("pergunta");
+            pergunta.textContent = "Qual comida você deseja adicionar?";
+            buttons.appendChild(inputList);
+            buttons.appendChild(btnSubmit);
+        })
+
+        const submitList = document.querySelector(".container-btns");
+        submitList.addEventListener("submit", () => {
+            event.preventDefault();
+            const pergunta = document.getElementById("pergunta");
+            pergunta.textContent = "Em qual categoria esse produto se encaixa?";
+            const buttons = document.querySelector(".container-btns");
+            buttons.innerHTML = "";
+            const select = document.createElement("select");
+            select.id = "categoria";
+            select.required = true;
+            buttons.appendChild(select);
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.textContent = "Selecione uma categoria";
+            select.appendChild(defaultOption);
+            Object.keys(lista).forEach(key => {
+                let option = document.createElement("option");
+                //alert(key)
+                option.value = key;
+                option.textContent = key;
+                select.appendChild(option);
+            })
+            const inserirBtn = document.createElement("input");
+            inserirBtn.id = "inserir-btn";
+            inserirBtn.type = "submit";
+            inserirBtn.value = "Inserir"
+            select.style.display = "block";
+            buttons.appendChild(inserirBtn);
+        })
+
+        
+
+
+    </script>
+</body>
+</html>

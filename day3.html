@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mestre dos magos pergunta</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #333;
+            padding: 50px 7%;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            height: 380px;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        .img {
+            position: relative;
+            z-index: 2;
+        }
+
+        .branco {
+            max-width: 250px;
+            width: 50%;
+            height: 30%;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            border-radius: 100%;
+            z-index: 1;
+        }
+
+        .texto {
+            font-family: "MedievalSharp", cursive, Arial, Helvetica, sans-serif;
+            color: #fff;
+        }
+
+        .texto .voz {
+            margin: 0 auto;
+            font-size: 1.3rem;
+            font-weight: bold;
+            line-height: 27px;
+            max-width: 450px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            gap: 50px;
+        }
+
+        .options button {
+            width: 160px;
+            padding: 20px;
+            background-color: #f00;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: "MedievalSharp", cursive, Arial, Helvetica, sans-serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 1s;
+        }
+
+        .options button:hover {
+            background-color: #222;
+
+        }
+
+        #add-lista {
+            width: 160px;
+            padding: 20px;
+            background-color: #000;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-family: "MedievalSharp", cursive, Arial, Helvetica, sans-serif;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="branco"></div>
+        <div class="img"><img src="mestre-dos-magos.png" alt=""></div>
+    </div>
+    <div class="texto">
+        <p class="voz">Aventureiro, seguirás o caminho do Front-end, moldando visões, ou do Back-end, dominando os segredos ocultos? Escolhe com sabedoria!</p>
+        <div class="options">
+            <button id="btn-left" onclick="frontEnd()">FRONT-END</button>
+            <button id="btn-right" onclick="backEnd()">BACK-END</button>
+        </div>
+    </div>
+
+    <script>
+        const btnLeft = document.getElementById("btn-left");
+        const btnRight = document.getElementById("btn-right");
+        const voz = document.querySelector(".voz");
+        let apredizados = [];
+
+        function setBtns(funcao) {
+            btnLeft.setAttribute("onclick", funcao +"()");
+            btnRight.setAttribute("onclick", funcao + "()");
+        }
+
+        function frontEnd() {
+            apredizados.push(btnLeft.textContent);
+            voz.textContent = "Aventureiro do Front-end, seguirás o caminho do React, forjando componentes dinâmicos, ou do Vue, moldando interfaces encantadas?";
+            btnLeft.textContent = "React";
+            btnRight.textContent = "Vue";
+            setBtns("especializar");
+        }
+
+        function backEnd() {
+            apredizados.push(btnRight.textContent);
+            voz.textContent = "Escolheste o caminho do Back-End! Agora, jovem aventureiro, deves decidir: aprenderás C# ou Java? Escolhe com sabedoria, pois cada caminho reserva grandes desafios!";
+            btnLeft.textContent = "C#";
+            btnRight.textContent = "Java";
+            setBtns("especializar");
+        }
+
+        function especializar() {
+            voz.textContent = "Ah, jovem aventureiro, tua jornada ainda não terminou! Seguirás aprimorando teus conhecimentos em " + apredizados[0] + " ou trilharás o caminho desafiador para te tornares um mestre Fullstack?";
+            btnLeft.textContent = "Especializar";
+            btnRight.textContent = "Fullstack";
+            setBtns("aprender");
+        }
+
+        function aprender() {
+            apredizados.push(event.target.textContent);
+            voz.textContent = "Muito bem, aventureiro! Agora me diga, quais são as tecnologias que desejas dominar ou explorar em tua jornada?";
+            document.querySelector(".options").innerHTML = '<input type="text" id="add-lista"> <button onclick="estudar()">Aprender</button>';
+        }
+
+        function estudar() {
+            input = document.getElementById("add-lista");
+            apredizados.push(input.value);
+            console.log(apredizados);
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4</title>
+
+    <style>
+
+        body {
+            background-color: #222222;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .container {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .container label {
+            font-size: 2rem;
+        }
+
+        .container input {
+            height: 25px;
+            font-size: 1.3rem;
+        }
+
+        .container p {
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        #btn {
+            padding: 18px;
+            border: none;
+            background-color: #f00;
+            color: #fff;
+            font-size: 1.2rem;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px auto 10px;
+            border-radius: 10px;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        #btn:hover {
+            background-color: #888;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Jogo da Advinhação</h1>
+
+    <div class="container">
+        <label for="number">Advinhe o Número:</label>
+    <input type="number" id="number">
+    <br>
+    <button id="btn">Verificar</button>
+    <p id="tentativas"> Número de tentativas: 3</p>
+    </div>
+
+
+    <script>
+        let tentativas = 3;
+        const secretNumber = parseInt(Math.random() * 10 + 1);
+        alert(secretNumber);
+        const btn = document.querySelector("#btn");
+        btn.addEventListener("click", () => {
+            const number = document.getElementById("number");
+            if(secretNumber == number.value) {
+                alert("Você acertou parabens!!!");
+            } else {
+                tentativas--;
+                alert("Você Errou...");
+                document.getElementById("tentativas").textContent = `Número de tentativas ${tentativas}`;
+                if(tentativas<1) {
+                btn.disabled = true;
+                alert("Acabaram as tentativas.\nO número secreto era: "+secretNumber);
+            }
+            }
+        })
+
+    </script>
+    
+</body>
+</html>
