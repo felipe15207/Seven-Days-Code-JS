@@ -55,6 +55,15 @@
             padding-left: 9px;
         }
 
+        .etapa2, .etapa3 {
+            display: none;
+            text-align: center;
+        }
+
+        #inserir-btn {
+            margin-left: 15px;
+        }
+
     </style>
 
 </head>
@@ -64,75 +73,97 @@
     <div class="anotacao">
         <div class="form-lista">
             <p id="pergunta">Deseja adicionar uma comida á lista?</p>
-        <form class="container-btns">
-            <input type="button" id="btn-yes" value="Sim">
-            <input type="button" id="btn-no" value="Não">
-        </form>
+        <div class="container-btns etapa1">
+            <input type="button" id="btn-yes" onclick="nextEtapa()" value="Sim">
+            <input type="button" id="btn-no" onclick="mostrarLista()" value="Não">
+        </div>
+        <div class="container-btns etapa2">
+            <input type="text" id="nome-produto" placeholder="Nome produto">
+            <input type="button" id="submit-produto" onclick="nextEtapa()" value="Adicionar">
+        </div>
+        <div class="container-btns etapa3">
+            <select name="categoria" id="categoria">
+
+            </select>
+            <input type="button" id="inserir-btn" onclick="nextEtapa()" value="Inserir">
+        </div>
         </div>
     </div>
 
-    <script>
 
-        const btnYes = document.getElementById("btn-yes");
+
+    <script>
+        let etapa = 1;
         let lista = {
             carnes: [], limpeza: [], doces: [], frutas: []
         };
-        /*Object.keys(lista).forEach(element => {
-            alert(element)
-        });*/
 
-        btnYes.addEventListener("click", () => {
-            const buttons = document.querySelector(".container-btns");
-            buttons.innerHTML = "";
-            const inputList = document.createElement("input");
-            inputList.id = "nome-produto";
-            inputList.type = "text";
-            inputList.required = true;
-            inputList.placeholder = "Nome do produto";
-            const btnSubmit = document.createElement("input");
-            btnSubmit.id = "submit-produto";
-            btnSubmit.type = "submit";
-            btnSubmit.value = "Adicionar";
-            const pergunta = document.getElementById("pergunta");
-            pergunta.textContent = "Qual comida você deseja adicionar?";
-            buttons.appendChild(inputList);
-            buttons.appendChild(btnSubmit);
-        })
-
-        const submitList = document.querySelector(".container-btns");
-        submitList.addEventListener("submit", () => {
-            event.preventDefault();
-            const pergunta = document.getElementById("pergunta");
-            pergunta.textContent = "Em qual categoria esse produto se encaixa?";
-            const buttons = document.querySelector(".container-btns");
-            buttons.innerHTML = "";
-            const select = document.createElement("select");
-            select.id = "categoria";
-            select.required = true;
-            buttons.appendChild(select);
-            const defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            defaultOption.textContent = "Selecione uma categoria";
-            select.appendChild(defaultOption);
-            Object.keys(lista).forEach(key => {
+        function nextEtapa() {
+            if(etapa<2) {
+                etapa++;
+                const etapa1 = document.querySelector(".etapa1");
+                etapa1.style.display = "none";
+                const etapa2 = document.querySelector(".etapa2");
+                etapa2.style.display = "block";
+            } else if(etapa<3) {
+                const nome = document.getElementById("nome-produto");
+                if(!nome.value.trim()) {
+                    alert("Digite o nome do produto.");
+                    return;
+                }
+                etapa++;
+                const etapa1 = document.querySelector(".etapa2");
+                etapa1.style.display = "none";
+                const etapa2 = document.querySelector(".etapa3");
+                etapa2.style.display = "block";
+                const select = document.getElementById("categoria");
+                select.innerHTML = "";
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "selecione uma categoria";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                select.appendChild(defaultOption);
+                Object.keys(lista).forEach(key => {
                 let option = document.createElement("option");
                 //alert(key)
                 option.value = key;
                 option.textContent = key;
                 select.appendChild(option);
             })
-            const inserirBtn = document.createElement("input");
-            inserirBtn.id = "inserir-btn";
-            inserirBtn.type = "submit";
-            inserirBtn.value = "Inserir"
-            select.style.display = "block";
-            buttons.appendChild(inserirBtn);
-        })
+            } else {
+                const categoria = document.getElementById("categoria");
+                if(!categoria.value) {
+                    alert("Selecione a categoria do produto.");
+                    return;
+                }
+                const nome = document.getElementById("nome-produto");
+                lista[categoria.value].push(nome.value);
+                categoria.value = "";
+                nome.value = "";
+                const etapa1 = document.querySelector(".etapa1");
+                const etapa3 = document.querySelector(".etapa3");
+                etapa3.style.display = "none";
+                etapa1.style.display = "block";
+                etapa = 1;
+            }
+        }
 
-        
-
+        function mostrarLista() {
+            const form = document.querySelector(".form-lista");
+            form.style.display = "none";
+            const anotacao = document.querySelector(".anotacao");
+            Object.keys(lista).forEach(key => {
+                let categoria = document.createElement("h2");
+                categoria.textContent = key;
+                anotacao.appendChild(categoria);
+                lista[key].forEach(nomeProduto => {
+                    let produto = document.createElement("p");
+                    produto.textContent = nomeProduto
+                    anotacao.appendChild(produto);
+                })
+            })
+        }
 
     </script>
 </body>
